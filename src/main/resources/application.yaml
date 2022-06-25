@@ -5,16 +5,16 @@ server:
 spring:
   datasource:
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:mydabase;MODE=PostgreSQL
+    url: jdbc:h2:mem:mydatabase;MODE=PostgreSQL
     username: sa
     password:
   jpa:
     show-sql: true
-    prooerties:
-      hiibernate:
+    properties:
+      hibernate:
         dialect: org.hibernate.dialect.H2Dialect
-        h2:
-          console:
-            enabled: true
-            setting:
-              web-allow-others: false
+  h2:
+    console:
+      enabled: true
+      settings:
+        web-allow-others: false
