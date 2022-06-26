@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JpbDataSourceConfig">
+    <data-sources>
+      <data-source id="49ddc1d2-b7df-41f2-a19f-3870027ee005" name="market" url="jdbc:h2:mem:mydatabase;MODE=PostgreSQL" driverClass="org.h2.Driver" />
+    </data-sources>
+    <data-source-infos>
+      <data-source-info id="49ddc1d2-b7df-41f2-a19f-3870027ee005" persistence-unit-name="Products" />
+    </data-source-infos>
+  </component>
+</project>

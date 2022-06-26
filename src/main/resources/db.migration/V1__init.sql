@@ -1,10 +1,13 @@
-create table products(
-    id bigserial primary key,
-    title varchar (255),
-    price int
-);
+ create table products
+ (
+     id    bigserial primary key,
+     title varchar(255),
+     price int
+ );
+
 insert into products (title,price)
-values  ('tomatoes',20),
+values  ('onion',15),
+        ('tomatoes',20),
         ('beet',25),
         ('potatoes',30),
         ('radish',35),
@@ -15,4 +18,12 @@ values  ('tomatoes',20),
         ('egs',65),
         ('pepperoni',70),
         ('cheese',75),
-        ('sausage',80);
+        ('sausage',80),
+        ('curd',85),
+        ('cream',90),
+        ('mayonnaise',95),
+        ('ketchup',100),
+        ('rice',105),
+        ('buckwheat',110),
+        ('pasta',115),
+        ('coffee',120);
