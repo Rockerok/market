@@ -23,21 +23,15 @@ public class ProductService {
         return productRepository.findAll(PageRequest.of(pageIndex,pageSize));
     }
     public  Optional<Product> findProductById(Long id) {
-        return Optional.of(productRepository.findById(id).get());
+        return productRepository.findById(id);
     }
 
     public Product saveProduct(Product product) {
         return productRepository.save(product);
     }
 
-    public boolean deleteProductById(Long id) {
-        try {
-            Optional<Product> product = Optional.of(productRepository.findById(id).get());
-            productRepository.delete(product.get());
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
+    public void deleteProductById(Long id) {
+                    productRepository.deleteById(id);
     }
 
     public List<Product> findByPriceBetween(int minPrice, int maxPrice) {

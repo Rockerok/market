@@ -14,30 +14,56 @@
 <div class="container" ng-controller="appController">
     <h2>Главная страничка</h2>
     <table class="table table-hover">
-        <thead><tr><td> Id </td><td> Title </td><td> Cost </td><td> More </td><td></td></tr></thead>
+        <thead><tr><td> Id </td><td>Название</td><td>Стоимость</td><td>Инфомарция</td><td> </td></tr></thead>
         <tbody>
         <tr ng-repeat="p in productsPage.content">
             <td>{{p.id}}</td>
             <td>{{p.title}}</td>
             <td>{{p.price}}</td>
-            <td><a href = # class="btn btn-info">More</a></td>
-            <td><button type="button" class="btn btn-danger" ng-click="deleteProduct(p)">Delete</button></td>
+            <td><a href = # class="btn btn-info">Подробнее</a></td>
+            <td><button type="button" class="btn btn-danger" ng-click="deleteProductById(p.id)">Delete</button></td>
         </tr>
         </tbody>
     </table>
-    <p>
-    <form  method="get">
-        <p><select name="sizePage">
-            <option value=5>5</option>
+    <form novalidate ng-submit="pageSize()">
+        <select name="sizePage">
+            <option value=5 selected>5</option>
             <option value=10>10</option>
             <option value=15>15</option>
             <option value=20>20</option>
         </select>
-        <input type="submit" value="Показать" class="btn btn-secondary" ng-click="pageSize()"></p>
+        <input type="submit" value="Показать" class="btn btn-secondary">
     </form>
-        <button type="button" class="btn btn-secondary" ng-click="pageBefore()"> Previous Page </button>
-        <button type="button" class="btn btn-secondary" ng-click="loadAllProducts()"> Page Products </button>
-        <button type="button" class="btn btn-secondary" ng-click="pageAfter()"> Next Page </button></p>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item"><a class="page-link"ng-click="pageBefore()">Previous</a></li>
+            <li class="page-item" ng-repeat="pageIndex in paginationArray">
+                <a class="page-link" ng-click="loadAllProducts(pageIndex,pageSize)">{{pageIndex}}</a></li>
+            <li class="page-item"><a class="page-link" ng-click="pageAfter()">Next</a></li>
+        </ul>
+    </nav>
+<!--        <button type="button" class="btn btn-secondary" ng-click="loadAllProducts()"> Page Products </button>-->
+
+    <form novalidate ng-submit="createNewProduct()">
+        <div class="mb-3">
+            <label  class="form-label">Название</label>
+            <input type="text" class="form-control" placeholder="Название" ng-model="new_product.title">
+        </div>
+        <div class="mb-3">
+            <label  class="form-label">Цена</label>
+            <input type="text" class="form-control" placeholder="Цена" ng-model="new_product.price">
+        </div>
+        <div class="mb-3">
+        <select class="form-select" ng-model="new_product.categoriesTitle">
+            <label  class="form-label">Категория товаров</label>
+            <option value="Food" selected>Food</option>
+            <!--            <option ng-repeat="p in productsPage.content">{{p}}</option>-->
+        </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+
 </div>
 </body>
 </html>
