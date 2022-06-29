@@ -1,35 +1,29 @@
 package ru.gb.market.controllers;
 
 import lombok.RequiredArgsConstructor;
+import net.bytebuddy.implementation.bind.annotation.Empty;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.gb.market.dto.ProductDto;
-import ru.gb.market.exceptions.ResourceNotFoundException;
-
-import ru.gb.market.model.Categories;
 import ru.gb.market.model.Product;
-import ru.gb.market.services.CategoriesServices;
 import ru.gb.market.services.ProductService;
 
 import javax.validation.constraints.Min;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 public class ProductController {
     private final ProductService productService;
-    private final CategoriesServices categoryService;
 
     @Min(5)
-    private int pageSize=10;
+    private int pageSize=5;
 
     @GetMapping("/products")
-    public Page<ProductDto> findAll(@RequestParam ("p") @Min(1) int pageIndex,
-                                    @RequestParam ("s") @Min(5) int pageSize) {
-        if (pageIndex < 1) {
-            pageIndex = 1;
-        }
+    public Page<ProductDto> findAll(@RequestParam ("page") @Min(1) int pageIndex,
+                                    @RequestParam ("size") @Min(5) int pageSize) {
         return productService.findAll(pageIndex-1,pageSize).map(ProductDto::new);
     }
 
@@ -57,39 +51,27 @@ public class ProductController {
 //        return productDtoList;
 //    }
 
-    //  http://localhost:8189/market/api/v1/products/{id}
     @GetMapping("/products/{id}")
     public ProductDto findProductById(@PathVariable Long id){
-        return new ProductDto(productService
-                .findProductById(id)
-                .orElseThrow(()-> new ResourceNotFoundException("Product id = "+id+" not found")));
-//                .get());
+        return new ProductDto(productService.findProductById(id).get());
     }
 
     @PostMapping("/products")
-    @ResponseStatus(HttpStatus.CREATED)
     public ProductDto saveProduct(@RequestBody ProductDto productDto){
         Product product = new Product();
-        product.setId(productDto.getId());
         product.setTitle(productDto.getTitle());
         product.setPrice(productDto.getPrice());
-        Categories categories = categoryService.findByTitle(productDto
-                    .getCategoriesTitle())
-                    .orElseThrow(()-> new ResourceNotFoundException("Category title = "+ productDto.getCategoriesTitle() +" not found"));
-        product.setCategories(categories);
         productService.saveProduct(product);
-
         return new ProductDto(product);
     }
 
-    @DeleteMapping("/products/delete/{id}")
-    public int deleteProductById(@PathVariable Long id){
-        productService.deleteProductById(id);
-        return HttpStatus.OK.value();
-    }
-//    @DeleteMapping("/products/delete/{id}")
-//    public int deleteProductById(@RequestParam ("id") Long id){
+//    @GetMapping("/products/delete/{id}")
+//    public boolean deleteProductById(@PathVariable Long id){
 //        return productService.deleteProductById(id);
 //    }
+    @GetMapping("/products/delete")
+    public boolean deleteProductById(@RequestParam ("id") Long id){
+        return productService.deleteProductById(id);
+    }
 
 }
