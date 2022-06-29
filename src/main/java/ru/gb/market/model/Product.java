@@ -21,7 +21,4 @@ public class Product {
     @Column(name = "price")
     private int price;
 
-    @ManyToOne
-    @JoinColumn(name = "categories_id")
-    private Categories categories;
 }
