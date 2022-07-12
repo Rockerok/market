@@ -1,0 +1,36 @@
+<div>
+    <h2>Корзинка</h2>
+    <table class="table table-hover">
+        <thead><tr><td> Id </td><td>Название</td><td>Стоимость</td><td>Инфомарция</td><td> </td><td>Удаление</td></tr></thead>
+        <tbody>
+        <tr ng-repeat="p in cardPage.content">
+            <td>{{p.id}}</td>
+            <td>{{p.title}}</td>
+            <td>{{p.price}}</td>
+            <td><a class="btn btn-info" ng-click="showProductInfo(p)">Подробнее</a></td>
+            <td> </td>
+            <td><button type="button" class="btn btn-danger" ng-click="deleteCardProductById(p.id)">Удалить</button></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <form novalidate ng-submit="pageSize()">
+        <form novalidate ng-submit="pageSize()">
+            <select name="sizePage" ng-model="product_page_size">
+                <option value=5 selected>5</option>
+                <option value=10>10</option>
+                <option value=15>15</option>
+                <option value=20>20</option>
+            </select>
+            <input type="submit" value="Показать" class="btn btn-secondary">
+        </form>
+    </form>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item"><a class="page-link"ng-click="pageBefore()">Предыдущая</a></li>
+            <li class="page-item" ng-repeat="pageIndex in paginationArray">
+                <a class="page-link" ng-click="loadAllProducts(pageIndex,pageSize)">{{pageIndex}}</a></li>
+            <li class="page-item"><a class="page-link" ng-click="pageAfter()">Следующая</a></li>
+        </ul>
+    </nav>
+</div>

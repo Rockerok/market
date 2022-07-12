@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Список продуктов</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="js.js"></script>
+</head>
+<body ng-app="my_market_front">
+<div class="container" ng-controller="appController">
+    <h2>Главная страничка</h2>
+    <table class="table table-hover">
+        <thead><tr><td> Id </td><td>Название</td><td>Стоимость</td><td>Инфомарция</td><td> </td></tr></thead>
+        <tbody>
+        <tr ng-repeat="p in productsPage.content">
+            <td>{{p.id}}</td>
+            <td>{{p.title}}</td>
+            <td>{{p.price}}</td>
+            <td><a href = # class="btn btn-info">Подробнее</a></td>
+            <td><button type="button" class="btn btn-danger" ng-click="deleteProductById(p.id)">Delete</button></td>
+        </tr>
+        </tbody>
+    </table>
+    <form novalidate ng-submit="pageSize()">
+        <select name="sizePage">
+            <option value=5 selected>5</option>
+            <option value=10>10</option>
+            <option value=15>15</option>
+            <option value=20>20</option>
+        </select>
+        <input type="submit" value="Показать" class="btn btn-secondary">
+    </form>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item"><a class="page-link"ng-click="pageBefore()">Previous</a></li>
+            <li class="page-item" ng-repeat="pageIndex in paginationArray">
+                <a class="page-link" ng-click="loadAllProducts(pageIndex,pageSize)">{{pageIndex}}</a></li>
+            <li class="page-item"><a class="page-link" ng-click="pageAfter()">Next</a></li>
+        </ul>
+    </nav>
+<!--        <button type="button" class="btn btn-secondary" ng-click="loadAllProducts()"> Page Products </button>-->
+
+    <form novalidate ng-submit="createNewProduct()">
+        <div class="mb-3">
+            <label  class="form-label">Название</label>
+            <input type="text" class="form-control" placeholder="Название" ng-model="new_product.title">
+        </div>
+        <div class="mb-3">
+            <label  class="form-label">Цена</label>
+            <input type="text" class="form-control" placeholder="Цена" ng-model="new_product.price">
+        </div>
+        <div class="mb-3">
+        <select class="form-select" ng-model="new_product.categoriesTitle">
+            <label  class="form-label">Категория товаров</label>
+            <option value="Food" selected>Food</option>
+            <!--            <option ng-repeat="p in productsPage.content">{{p}}</option>-->
+        </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+
+
+</div>
+</body>
+</html>

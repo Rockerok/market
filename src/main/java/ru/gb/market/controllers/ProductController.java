@@ -3,16 +3,20 @@ package ru.gb.market.controllers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.gb.market.dto.ProductDto;
+import ru.gb.market.exceptions.DataValidationException;
 import ru.gb.market.exceptions.ResourceNotFoundException;
-
 import ru.gb.market.model.Categories;
 import ru.gb.market.model.Product;
 import ru.gb.market.services.CategoriesServices;
 import ru.gb.market.services.ProductService;
 
 import javax.validation.constraints.Min;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -25,7 +29,7 @@ public class ProductController {
     private int pageSize=10;
 
     @GetMapping("/products")
-    public Page<ProductDto> findAll(@RequestParam ("p") @Min(1) int pageIndex,
+    public Page<ProductDto> findAll(@RequestParam (name = "p", defaultValue = "1") @Min(1) int pageIndex,
                                     @RequestParam ("s") @Min(5) int pageSize) {
         if (pageIndex < 1) {
             pageIndex = 1;
@@ -68,7 +72,14 @@ public class ProductController {
 
     @PostMapping("/products")
     @ResponseStatus(HttpStatus.CREATED)
-    public ProductDto saveProduct(@RequestBody ProductDto productDto){
+    public ProductDto saveProduct(@RequestBody @Validated ProductDto productDto, BindingResult bindingResult){
+        if (bindingResult.hasErrors()) {
+            throw new DataValidationException(bindingResult
+                    .getAllErrors()
+                    .stream()
+                    .map(ObjectError::getDefaultMessage)
+                    .collect(Collectors.toList()));
+        }
         Product product = new Product();
         product.setId(productDto.getId());
         product.setTitle(productDto.getTitle());
@@ -78,7 +89,6 @@ public class ProductController {
                     .orElseThrow(()-> new ResourceNotFoundException("Category title = "+ productDto.getCategoriesTitle() +" not found"));
         product.setCategories(categories);
         productService.saveProduct(product);
-
         return new ProductDto(product);
     }
 
@@ -92,4 +102,8 @@ public class ProductController {
 //        return productService.deleteProductById(id);
 //    }
 
+    @PutMapping("/products")
+    public void updateProduct(@RequestBody ProductDto productDto) {
+        productService.updateProductFromDto(productDto);
+    }
 }
