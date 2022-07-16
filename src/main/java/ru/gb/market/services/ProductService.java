@@ -22,9 +22,6 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final CategoriesServices categoriesServices;
 
-//    public List<Product> findAll() {
-//        return productRepository.findAll();
-//    }
     public Page<Product> findAll(int pageIndex, int pageSize) {
         return productRepository.findAll(PageRequest.of(pageIndex,pageSize));
     }
