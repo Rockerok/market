@@ -1,7 +1,7 @@
 <div>
     <h2>Каталог товаров</h2>
     <table class="table table-hover">
-        <thead><tr><td> Id </td><td>Название</td><td>Стоимость</td><td>Инфомарция</td><td>В корзину</td><td> </td><td>Изменение</td><td>Удаление</td></tr></thead>
+        <thead><tr><td> Id </td><td>Название</td><td>Стоимость</td><td>Инфомарция</td><td>В корзину</td><td> </td><td>Изменение</td></tr></thead>
         <tbody>
         <tr ng-repeat="p in productsPage.content">
             <td>{{p.id}}</td>
@@ -11,7 +11,7 @@
             <td><a class="btn btn-info" ng-click="cardAddProduct(p)">Добавить в корзину</a></td>
             <td> </td>
             <td><button type="button" class="btn btn-danger" ng-click="navToEditProduct(p.id)">Изменить</button></td>
-            <td><button type="button" class="btn btn-danger" ng-click="deleteProductById(p.id)">Удалить</button></td>
+<!--            <td><button type="button" class="btn btn-danger" ng-click="deleteProductById(p.id)">Удалить</button></td>-->
         </tr>
         </tbody>
     </table>

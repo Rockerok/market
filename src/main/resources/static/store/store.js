@@ -64,4 +64,20 @@ angular.module('my_market_front').controller('storeController',function ($scope,
     $scope.navToEditProduct = function(productId){
         $location.path('/edit_product/'+ productId);
     }
+
+//    $scope.deleteProduct = function (product){
+//        console.log(product.id);
+//        $http({
+//            url: contPath+'products/delete/',
+//            method: 'DELETE',
+//            params: {
+//               id: product.id
+//            }
+//        }).then(function(response){
+//                          console.log(response);
+//                          $scope.productsPage = response.data;
+//                      });
+//        //удаление идёт штатно, а вот страницу не обновляет
+//        $scope.loadAllProducts(letPageIndex,letPageSize);
+//    }
 });
