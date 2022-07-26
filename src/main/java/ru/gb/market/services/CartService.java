@@ -6,7 +6,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import ru.gb.market.config.ApplicationConfiguration;
+import ru.gb.market.configs.ApplicationConfiguration;
 import ru.gb.market.model.Cart;
 import ru.gb.market.model.Product;
 import ru.gb.market.repositories.CartRepository;
