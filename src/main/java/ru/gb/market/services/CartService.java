@@ -2,6 +2,7 @@ package ru.gb.market.services;
 
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.data.domain.Page;
@@ -12,17 +13,28 @@ import ru.gb.market.model.Cart;
 import ru.gb.market.model.Product;
 import ru.gb.market.repositories.CartRepository;
 import ru.gb.market.repositories.ProductRepository;
-
+import java.util.List;
 import java.util.Optional;
 
-@NoArgsConstructor
+//@NoArgsConstructor
 @Service
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class CartService {
     ApplicationContext context = new AnnotationConfigApplicationContext(ApplicationConfiguration.class);
     private CartRepository cartRepository;
     private ProductRepository productRepository;
-    Cart cart = context.getBean(Cart.class);
+    private List<Product> productInCart;
+//    private Cart cart;
+
+    private Cart cart = context.getBean(Cart.class);
+
+    @Cacheable(value = "/productsCart")
+    public Cart getCart(Long userId,int pageIndex, int pageSize) {
+        Cart cart = new Cart();
+        cart.setProductInCart(productInCart);
+        return cart;
+    }
+
 
     public Page<Product> findAll(int pageIndex, int pageSize) {
         return cartRepository.findAll(PageRequest.of(pageIndex,pageSize));
@@ -31,12 +43,20 @@ public class CartService {
         return productRepository.findById(id);
     }
 
-    public void cartAddProduct(Product product) {
-        cart.setProductCart(product);
+
+    public Cart cartAddProduct(Product product) {
+        cart.productInCart.add(product);
+        cart.setCountProduct(+1L);
+        cart.setSumCart(cart.getCountProduct() * product.getPrice());
+        return cart;
     }
 
     public void deleteCartProductById(Long id) {
-        cart.setRemoveProd(id);
-//        cartRepository.deleteById(id);
+        try {
+            cart.productInCart.remove(id);
+        } catch (IndexOutOfBoundsException iobe){
+            System.out.println("Product not delete from Cart");
+        }
     }
+
 }

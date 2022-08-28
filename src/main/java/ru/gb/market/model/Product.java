@@ -19,7 +19,7 @@ public class Product {
     private String title;
 
     @Column(name = "price")
-    private int price;
+    private Double price;
 
     @ManyToOne
     @JoinColumn(name = "categories_id")

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.gb.market.dto.AuthRequest;
 import ru.gb.market.dto.AuthResponse;
 import ru.gb.market.exceptions.MarketError;
+import ru.gb.market.services.UserService;
 import ru.gb.market.utils.JwtTokenUtil;
 
 

@@ -1,46 +1,30 @@
 package ru.gb.market.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import javax.persistence.*;
-import java.util.ArrayList;
+
+import java.io.Serializable;
 import java.util.List;
 
 //@Entity
 //@Table(name = "cart")
-//@Data
+@Data
+@AllArgsConstructor
 @NoArgsConstructor
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-public class Cart {
-    private CartFactory cartFactory;
-    private List<Product> productCart;
+public class Cart implements Serializable {
+    public List<Product> productInCart;
+    private Long countProduct;
+    private Double sumCart;
+    private Long userId;
+//    private List<CartItem> items;
 
-    public List<Product> getCart() {
-        return productCart;
-    }
-    public void setProductCart(Product product) {
-        productCart.add(product);
-    }
 
-//    @Autowired
-    public Cart(CartFactory cartFactory, List<Product> productCart) {
-        productCart = new ArrayList<>();
-        this.cartFactory = cartFactory;
-        this.productCart = productCart;
-    }
-
-    public void setRemoveProd(Long id) {
-        try {
-            productCart.remove(id);
-        } catch (IndexOutOfBoundsException iobe){
-            System.out.println("Product not delete from Cart");
-        }
-    }
 
 //    @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -9,7 +9,7 @@ import ru.gb.market.model.Product;
 public class ProductDto {
     private Long id;
     private String title;
-    private int price;
+    private Double price;
     private String categoriesTitle;
 
     public ProductDto(Product product) {
