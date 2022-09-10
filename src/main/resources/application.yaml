@@ -30,3 +30,6 @@ jwt:
 market:
   version: 13
   app-name: Market v.${market.version}
+
+storage:
+  path: ${user.home}/files
