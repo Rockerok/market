@@ -17,7 +17,7 @@ public class FileController {
     @PostMapping
     public Boolean saveString(@RequestBody FileSaveRequest request) {
         try {
-            fileService.save(request.getText(), request.getName());
+            fileService.save(request.getText(), request.getNameFile());
             return true;
         } catch (IOException e) {
             return false;

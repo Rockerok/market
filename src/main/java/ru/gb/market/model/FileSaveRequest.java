@@ -1,13 +1,14 @@
 package ru.gb.market.model;
 
 import lombok.Data;
-import ru.gb.market.repositories.ProductRepository;
+import org.springframework.context.annotation.Bean;
 
-import java.util.HashMap;
+import java.time.LocalDate;
+import java.util.Date;
 
 @Data
 public class FileSaveRequest {
-    private String name;
-    private String text;
 
+    private String nameFile;
+    private String text;
 }

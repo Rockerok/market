@@ -10,6 +10,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByUsername(String username);
 
     // попытка добавления новому Пользователю роли Юзер
-    @Query("insert into users_roles (user_id, role_id) values (:userId, 1)")
-    void insertUserRole(Long userId);
+//    @Query("insert into users_roles (user_id, role_id) values (:userId, 1)")
+//    void insertUserRole(Long userId);
 }

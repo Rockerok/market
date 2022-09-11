@@ -41,9 +41,9 @@ public class UserService implements UserDetailsService {
         return (Page<User>) userRepository.findAll();
     }
 
-    public User saveUser(User user) {
-        // попытка добавления новому Пользователю роли Юзер
-        userRepository.insertUserRole(user.getId());
-        return userRepository.save(user);
-    }
+//    public User saveUser(User user) {
+//        // попытка добавления новому Пользователю роли Юзер
+//        userRepository.insertUserRole(user.getId());
+//        return userRepository.save(user);
+//    }
 }
