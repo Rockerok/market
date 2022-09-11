@@ -26,7 +26,7 @@ public class CartService {
     private List<Product> productInCart;
 //    private Cart cart;
 
-    private Cart cart = context.getBean(Cart.class);
+//    private Cart cart = context.getBean(Cart.class);
 
     @Cacheable(value = "/productsCart")
     public Cart getCart(Long userId,int pageIndex, int pageSize) {
@@ -44,19 +44,19 @@ public class CartService {
     }
 
 
-    public Cart cartAddProduct(Product product) {
-        cart.productInCart.add(product);
-        cart.setCountProduct(+1L);
-        cart.setSumCart(cart.getCountProduct() * product.getPrice());
-        return cart;
-    }
-
-    public void deleteCartProductById(Long id) {
-        try {
-            cart.productInCart.remove(id);
-        } catch (IndexOutOfBoundsException iobe){
-            System.out.println("Product not delete from Cart");
-        }
-    }
+//    public Cart cartAddProduct(Product product) {
+//        cart.productInCart.add(product);
+//        cart.setCountProduct(+1L);
+//        cart.setSumCart(cart.getCountProduct() * product.getPrice());
+//        return cart;
+//    }
+//
+//    public void deleteCartProductById(Long id) {
+//        try {
+//            cart.productInCart.remove(id);
+//        } catch (IndexOutOfBoundsException iobe){
+//            System.out.println("Product not delete from Cart");
+//        }
+//    }
 
 }

@@ -1,13 +1,10 @@
 package ru.gb.market.controllers;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.gb.market.dto.CartDto;
-import ru.gb.market.dto.ProductDto;
-import ru.gb.market.model.Cart;
 import ru.gb.market.services.CartService;
 import ru.gb.market.services.CategoriesServices;
 import ru.gb.market.services.ProductService;
@@ -33,8 +30,9 @@ public class CartController {
 
     @GetMapping("/productsCart")
     public Page<CartDto> getCart(@RequestParam Long userId,
-                                     @RequestParam (name = "p", defaultValue = "1") @Min(1) int pageIndex,
-                                     @RequestParam ("s") @Min(10) int pageSize) {
+                                     @RequestParam (name = "p", defaultValue = "1") @Min(1) int pageIndex)
+//                                     @RequestParam ("s") @Min(10) int pageSize)
+    {
         if (pageIndex < 1) {
             pageIndex = 1;
         }
@@ -42,9 +40,9 @@ public class CartController {
 //        return productService.findAll(pageIndex-1,pageSize).map(ProductDto::new);
     }
 
-    @DeleteMapping("/productsCart/delete/{id}")
-    public int deleteCardProductById(@PathVariable Long id){
-        cartService.deleteCartProductById(id);
-        return HttpStatus.OK.value();
-    }
+//    @DeleteMapping("/productsCart/delete/{id}")
+//    public int deleteCardProductById(@PathVariable Long id){
+//        cartService.deleteCartProductById(id);
+//        return HttpStatus.OK.value();
+//    }
 }
